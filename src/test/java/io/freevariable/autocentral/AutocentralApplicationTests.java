@@ -47,7 +47,7 @@ class AutocentralApplicationTests {
 	}
 
     @Test
-    public void testUpdateCustomerWithEmptyFirstName() throws Exception {
+    public void testCreateCustomerWithEmptyFirstName() throws Exception {
 		// Create a new customer object to send in the request body
 		Customer customer = new Customer();
 		customer.setFirstName("");
@@ -57,7 +57,7 @@ class AutocentralApplicationTests {
 		// Convert the customer object to JSON
 		String requestBody = objectMapper.writeValueAsString(customer);
 
-        mockMvc.perform(put("/customers/1")
+        mockMvc.perform(post("/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -65,6 +65,27 @@ class AutocentralApplicationTests {
                 .andExpect(jsonPath("$.errors", hasSize(1)))
                 .andExpect(jsonPath("$.errors[0]").value("firstName must not be blank"));
     }
+
+	@Test
+	public void testCreateCustomerWithFutureBirthdate() throws Exception {
+		// Create a new customer object with a birthdate in the future
+		Customer customer = new Customer();
+		customer.setFirstName("John");
+		customer.setLastName("Doe");
+		customer.setBirthDate(LocalDate.now().plusYears(1));
+
+		// Convert the customer object to JSON
+		String requestBody = objectMapper.writeValueAsString(customer);
+
+		// Send a POST request to create the customer
+		mockMvc.perform(post("/customers")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(requestBody))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.message").value("Validation failed"))
+				.andExpect(jsonPath("$.errors", hasSize(1)))
+				.andExpect(jsonPath("$.errors[0]").value("birthDate must be a past date"));
+	}
 
 
 
