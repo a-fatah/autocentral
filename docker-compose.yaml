@@ -1,0 +1,13 @@
+version: '3.1'
+services:
+  db:
+    image: arm64v8/mysql
+    environment:
+      MYSQL_USER: backend
+      MYSQL_PASSWORD: s3cr3t
+      MYSQL_DATABASE: autocentral
+      MYSQL_ROOT_PASSWORD: root-s3cr3t
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/postgresql/data
