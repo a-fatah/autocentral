@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class Vehicle {
@@ -11,14 +13,19 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String vin;
 
+    @NotBlank
     private String brand;
 
+    @NotBlank
     private String model;
 
+    @NotBlank
     private Integer modelYear;
 
+    @Positive
     private Integer price; // in cents
 
     @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

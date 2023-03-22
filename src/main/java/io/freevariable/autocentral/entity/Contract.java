@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class Contract {
@@ -12,8 +14,10 @@ public class Contract {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String contractNumber;
 
+    @Positive
     private Integer monthlyRate; // in cents
 
     @ManyToOne(fetch = FetchType.LAZY)
