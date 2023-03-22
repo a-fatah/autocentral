@@ -22,7 +22,7 @@ public class ValidationExceptionHandler {
     public ResponseEntity<?> handleValidationException(ConstraintViolationException ex, WebRequest request) {
         List<String> errors = new ArrayList<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-            errors.add(violation.getMessage());
+            errors.add(violation.getPropertyPath() + " " + violation.getMessage());
         }
         return ResponseEntity.badRequest()
                 .contentType(MediaType.APPLICATION_JSON)
