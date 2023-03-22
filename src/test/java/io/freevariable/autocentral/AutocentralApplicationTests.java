@@ -28,26 +28,6 @@ class AutocentralApplicationTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-    @Test
-    public void testUpdateCustomerWithEmptyFirstName() throws Exception {
-		// Create a new customer object to send in the request body
-		Customer customer = new Customer();
-		customer.setFirstName("");
-		customer.setLastName("Doe");
-		customer.setBirthDate(LocalDate.of(1980, 1, 1));
-
-		// Convert the customer object to JSON
-		String requestBody = objectMapper.writeValueAsString(customer);
-
-        mockMvc.perform(put("/customers/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Validation failed"))
-                .andExpect(jsonPath("$.errors", hasSize(1)))
-                .andExpect(jsonPath("$.errors[0]").value("must not be blank"));
-    }
-
 	@Test
 	public void testCreateCustomer() throws Exception {
 		// Create a new customer object to send in the request body
@@ -65,6 +45,28 @@ class AutocentralApplicationTests {
 						.content(requestBody))
 				.andExpect(status().isCreated());
 	}
+
+    @Test
+    public void testUpdateCustomerWithEmptyFirstName() throws Exception {
+		// Create a new customer object to send in the request body
+		Customer customer = new Customer();
+		customer.setFirstName("");
+		customer.setLastName("Doe");
+		customer.setBirthDate(LocalDate.of(1980, 1, 1));
+
+		// Convert the customer object to JSON
+		String requestBody = objectMapper.writeValueAsString(customer);
+
+        mockMvc.perform(put("/customers/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Validation failed"))
+                .andExpect(jsonPath("$.errors", hasSize(1)))
+                .andExpect(jsonPath("$.errors[0]").value("firstName must not be blank"));
+    }
+
+
 
 
 
