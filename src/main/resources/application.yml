@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/autocentral
+    username: backend
+    password: s3cr3t
