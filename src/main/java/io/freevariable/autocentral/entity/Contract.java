@@ -1,14 +1,15 @@
 package io.freevariable.autocentral.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +21,13 @@ public class Contract {
     @Positive
     private Integer monthlyRate; // in cents
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @RestResource(exported = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @RestResource(exported = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 

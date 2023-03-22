@@ -1,5 +1,6 @@
 package io.freevariable.autocentral.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,7 @@ public class Vehicle {
     @NotBlank
     private String model;
 
-    @NotBlank
+    @Positive
     private Integer modelYear;
 
     @Positive
