@@ -32,7 +32,7 @@ jobs:
         env:
           APP_VERSION: ${{ env.APP_VERSION }}
         run: |
-          ./gradlew bootBuildImage --imageName=docker.pkg.github.com/autocentral:${APP_VERSION}
+          ./gradlew bootBuildImage --imageName=docker.pkg.github.com/autocentral
 
       - name: Push Docker image
         env:
