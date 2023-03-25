@@ -25,7 +25,8 @@ jobs:
       - name: Get app version
         id: get_version
         run: |
-          echo "APP_VERSION=0.1.0" >> $GITHUB_OUTPUT
+          version=$(./gradlew getVersion | grep -o "Version: [0-9]*\.[0-9]*\.[0-9]*" | awk '{print $2}')
+          echo "APP_VERSION=$version" >> $GITHUB_OUTPUT
 
       - name: Build Docker image
         run: |
