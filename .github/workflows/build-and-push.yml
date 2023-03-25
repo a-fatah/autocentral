@@ -32,11 +32,11 @@ jobs:
         env:
           APP_VERSION: ${{ env.APP_VERSION }}
         run: |
-          ./gradlew bootBuildImage --imageName=docker.pkg.github.com/${{ github.repository }}/autocentral:${APP_VERSION}
+          ./gradlew bootBuildImage --imageName=docker.pkg.github.com/autocentral:${APP_VERSION}
 
       - name: Push Docker image
         env:
           APP_VERSION: ${{ env.APP_VERSION }}
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-          docker push docker.pkg.github.com/${{ github.repository }}/autocentral:${APP_VERSION}
+          docker push docker.pkg.github.com/autocentral:${APP_VERSION}
