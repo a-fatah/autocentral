@@ -28,7 +28,7 @@ jobs:
         run: |
           version=$(./gradlew getVersion | tail -1)
           echo "APP_VERSION=${version}" >> $GITHUB_ENV
-          echo "Building Docker image with version ${{APP_VERSION}}"
+          echo "Building Docker image with version ${APP_VERSION}"
           ./gradlew bootBuildImage --imageName=docker.pkg.github.com/autocentral:${{APP_VERSION}}
 
       - name: Push Docker image
