@@ -22,12 +22,18 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Build Docker image
+      - name: Get app version
+        id: get_version
         run: |
-          version=$(./gradlew getVersion | tail -1)
-          echo "App version: $version"
+          version=$(./gradlew getVersion | grep -o "Version: [0-9]*\.[0-9]*\.[0-9]*" | awk '{print $2}')
           echo "APP_VERSION=${version}" >> $GITHUB_ENV
-          echo "Building Docker image with version $APP_VERSION"
+
+      - name: Build Docker image
+        env:
+          APP_VERSION: ${{ env.APP_VERSION }}
+        run: |
+          echo "Building Docker image with version $APP_VERSION
+          ./gradlew bootBuildImage --imageName=docker.pkg.github.com/autocentral:$APP_VERSION
 
       - name: Push Docker image
         env:
