@@ -25,11 +25,11 @@ jobs:
       - name: Get app version
         id: get_version
         run: |
-          echo "APP_VERSION=$(./gradlew getVersion | grep -o "Version: [0-9]*\.[0-9]*\.[0-9]*" | awk '{print $2}')" >> $GITHUB_OUTPUT
+          echo "APP_VERSION=0.1.0" >> $GITHUB_OUTPUT
 
       - name: Build Docker image
         run: |
-          echo "Building Docker image with version ${{ env.APP_VERSION }}"
+          echo "Building Docker image with version ${{ steps.get_version.outputs.APP_VERSION }}"
           ./gradlew bootBuildImage --imageName=docker.pkg.github.com/autocentral:${{ steps.get_version.outputs.APP_VERSION }}
 
       - name: Push Docker image
