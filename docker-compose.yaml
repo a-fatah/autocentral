@@ -1,12 +1,22 @@
 version: '3.1'
 services:
-  db:
+  autocentral:
+    image: ghcr.io/a-fatah/autocentral/autocentral:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - autocentral-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://autocentral-db:3306/autocentral
+      SPRING_DATASOURCE_USERNAME: backend
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+  autocentral-db:
     image: arm64v8/mysql
     environment:
       MYSQL_USER: backend
-      MYSQL_PASSWORD: s3cr3t
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: autocentral
-      MYSQL_ROOT_PASSWORD: root-s3cr3t
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
