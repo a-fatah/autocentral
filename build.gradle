@@ -59,6 +59,6 @@ tasks.named('bootJar') {
 
 task getVersion {
 	doLast {
-		println version
+		println "Version: ${version}"
 	}
 }
