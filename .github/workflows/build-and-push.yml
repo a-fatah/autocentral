@@ -38,3 +38,4 @@ jobs:
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
           docker push docker.pkg.github.com/${{ github.repository }}/autocentral:${{ steps.get_version.outputs.APP_VERSION }}
+          docker push docker.pkg.github.com/${{ github.repository }}/autocentral:latest
