@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   autocentral:
-    image: ghcr.io/a-fatah/autocentral/autocentral:latest
+    image: ghcr.io/a-fatah/autocentral/autocentral:0.1.0
     ports:
       - "8080:8080"
     depends_on:
