@@ -23,5 +23,5 @@ jobs:
 
       - name: Push Docker image
         run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin --distribution=ghcr.io
           docker push docker.pkg.github.com/${{ github.repository }}/my-app:${{ github.sha }}
