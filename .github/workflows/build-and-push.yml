@@ -32,7 +32,7 @@ jobs:
       - name: Build Docker image
         run: |
           echo "Building Docker image with version ${{ steps.get_version.outputs.APP_VERSION }}"
-          ./gradlew bootBuildImage --imageName=docker.pkg.github.com/${{ github.repository }}/autocentral:${{ steps.get_version.outputs.APP_VERSION }}
+          ./gradlew bootBuildImage --imageName=docker.pkg.github.com/${{ github.repository }}:${{ steps.get_version.outputs.APP_VERSION }}
 
       - name: Push Docker image
         env:
